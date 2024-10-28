@@ -7,13 +7,13 @@ enum _LengthChangeStatus {
 }
 
 class AnimatedNumberSwitcher extends StatefulWidget {
-  final String text;
+  final int number;
   final TextStyle? style;
   final TextAlign? textAlign;
   final TextOverflow? overflow;
   final int? maxLines;
   const AnimatedNumberSwitcher(
-    this.text, {
+    this.number, {
     super.key,
     this.style,
     this.textAlign,
@@ -28,8 +28,8 @@ class AnimatedNumberSwitcher extends StatefulWidget {
 class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with TickerProviderStateMixin {
   late final _controllers = <AnimationController>[];
   late int _changedLengh = 0;
-  late List<String> _oldText = _getChars(widget.text);
-  late List<String> _newText = _getChars(widget.text);
+  late List<String> _oldText = _getNumbers(widget.number);
+  late List<String> _newText = _getNumbers(widget.number);
   var _status = _LengthChangeStatus.none;
   @override
   void initState() {
@@ -40,9 +40,9 @@ class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with Ti
   @override
   void didUpdateWidget(covariant AnimatedNumberSwitcher oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.text == widget.text) return;
-    _oldText = _getChars(oldWidget.text);
-    _newText = _getChars(widget.text);
+    if (oldWidget.number == widget.number) return;
+    _oldText = _getNumbers(oldWidget.number);
+    _newText = _getNumbers(widget.number);
     if (_oldText.length < _newText.length) {
       _status = _LengthChangeStatus.increase;
       _changedLengh = _newText.length - _oldText.length;
@@ -63,58 +63,67 @@ class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with Ti
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: List.generate(
-            _oldText.length,
-            (index) {
-              final controller = _controllers.elementAtOrNull(index);
-              if (controller == null) return const SizedBox();
-              return FadeTransition(
-                opacity: CurvedAnimation(parent: controller, curve: Curves.easeOut).drive(Tween(begin: 1, end: 0)),
-                child: Text(
-                  _oldText[index],
-                  style: widget.style,
-                  overflow: widget.overflow,
-                  textAlign: widget.textAlign,
-                  maxLines: widget.maxLines,
-                ),
-              );
-            },
-          ),
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: List.generate(
-            _newText.length,
-            (index) {
-              final controller = _controllers.elementAtOrNull(index);
-              if (controller == null) return const SizedBox();
-              return FadeTransition(
-                opacity: CurvedAnimation(parent: controller, curve: Curves.ease).drive(Tween(begin: .25, end: 1)),
-                child: SlideTransition(
-                  position: CurvedAnimation(parent: controller, curve: Curves.ease).drive(
-                    Tween(begin: const Offset(0, -1), end: const Offset(0, 0)),
-                  ),
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.ease,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            textDirection: TextDirection.ltr,
+            children: List.generate(
+              _oldText.length,
+              (index) {
+                final controller = _controllers.elementAtOrNull(index);
+                if (controller == null) return const SizedBox();
+                return FadeTransition(
+                  opacity: CurvedAnimation(parent: controller, curve: Curves.easeOut).drive(Tween(begin: 1, end: 0)),
                   child: Text(
-                    _newText[index],
+                    _oldText[index],
                     style: widget.style,
                     overflow: widget.overflow,
                     textAlign: widget.textAlign,
                     maxLines: widget.maxLines,
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
-        ),
-      ],
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            textDirection: TextDirection.ltr,
+            children: List.generate(
+              _newText.length,
+              (index) {
+                final controller = _controllers.elementAtOrNull(index);
+                if (controller == null) return const SizedBox();
+                return FadeTransition(
+                  opacity: CurvedAnimation(parent: controller, curve: Curves.ease).drive(Tween(begin: .0, end: 1)),
+                  child: SlideTransition(
+                    position: CurvedAnimation(parent: controller, curve: Curves.ease).drive(
+                      Tween(begin: const Offset(0, -1), end: const Offset(0, 0)),
+                    ),
+                    child: Text(
+                      _newText[index],
+                      style: widget.style,
+                      overflow: widget.overflow,
+                      textAlign: widget.textAlign,
+                      maxLines: widget.maxLines,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  List<String> _getChars(String text) => text.toString().split('');
+  List<String> _getNumbers(int number) => number.toString().split('');
 
   void _initControllers() {
     for (int i = 0; i < _newText.length; i++) {
