@@ -7,13 +7,13 @@ enum _LengthChangeStatus {
 }
 
 class AnimatedNumberSwitcher extends StatefulWidget {
-  final int number;
+  final String text;
   final TextStyle? style;
   final TextAlign? textAlign;
   final TextOverflow? overflow;
   final int? maxLines;
   const AnimatedNumberSwitcher(
-    this.number, {
+    this.text, {
     super.key,
     this.style,
     this.textAlign,
@@ -28,8 +28,8 @@ class AnimatedNumberSwitcher extends StatefulWidget {
 class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with TickerProviderStateMixin {
   late final _controllers = <AnimationController>[];
   late int _changedLengh = 0;
-  late List<String> _oldText = _getNumbers(widget.number);
-  late List<String> _newText = _getNumbers(widget.number);
+  late List<String> _oldText = _getChars(widget.text);
+  late List<String> _newText = _getChars(widget.text);
   var _status = _LengthChangeStatus.none;
   @override
   void initState() {
@@ -40,9 +40,9 @@ class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with Ti
   @override
   void didUpdateWidget(covariant AnimatedNumberSwitcher oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.number == widget.number) return;
-    _oldText = _getNumbers(oldWidget.number);
-    _newText = _getNumbers(widget.number);
+    if (oldWidget.text == widget.text) return;
+    _oldText = _getChars(oldWidget.text);
+    _newText = _getChars(widget.text);
     if (_oldText.length < _newText.length) {
       _status = _LengthChangeStatus.increase;
       _changedLengh = _newText.length - _oldText.length;
@@ -114,7 +114,7 @@ class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with Ti
     );
   }
 
-  List<String> _getNumbers(int number) => number.toString().split('');
+  List<String> _getChars(String text) => text.toString().split('');
 
   void _initControllers() {
     for (int i = 0; i < _newText.length; i++) {
