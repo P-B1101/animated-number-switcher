@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'switcher_widget.dart';
+
 class AnimatedTextSwitcher extends StatefulWidget {
   final String text;
   final TextStyle? style;
@@ -40,34 +42,14 @@ class _AnimatedTextSwitcherState extends State<AnimatedTextSwitcher> with Single
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        FadeTransition(
-          opacity: CurvedAnimation(parent: _controller, curve: Curves.easeOut).drive(Tween(begin: 1, end: 0)),
-          child: Text(
-            _oldText,
-            style: widget.style,
-            overflow: widget.overflow,
-            textAlign: widget.textAlign,
-            maxLines: widget.maxLines,
-          ),
-        ),
-        FadeTransition(
-          opacity: CurvedAnimation(parent: _controller, curve: Curves.ease),
-          child: SlideTransition(
-            position: CurvedAnimation(parent: _controller, curve: Curves.ease).drive(
-              Tween(begin: const Offset(0, -1), end: const Offset(0, 0)),
-            ),
-            child: Text(
-              _newText,
-              style: widget.style,
-              overflow: widget.overflow,
-              textAlign: widget.textAlign,
-              maxLines: widget.maxLines,
-            ),
-          ),
-        ),
-      ],
+    return SwitcherWidget(
+      controllers: [_controller],
+      newChars: [_newText],
+      oldChars: [_oldText],
+      style: widget.style,
+      textAlign: widget.textAlign,
+      maxLines: widget.maxLines,
+      overflow: widget.overflow,
     );
   }
 }

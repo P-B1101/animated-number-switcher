@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'switcher_widget.dart';
+
 enum _LengthChangeStatus {
   increase,
   decrease,
@@ -7,19 +9,46 @@ enum _LengthChangeStatus {
 }
 
 class AnimatedNumberSwitcher extends StatefulWidget {
-  final int number;
+  final String text;
   final TextStyle? style;
   final TextAlign? textAlign;
   final TextOverflow? overflow;
   final int? maxLines;
   const AnimatedNumberSwitcher(
-    this.number, {
+    int number, {
     super.key,
     this.style,
     this.textAlign,
     this.overflow,
     this.maxLines,
+  }) : text = '$number';
+
+  const AnimatedNumberSwitcher._({
+    required this.text,
+    required this.style,
+    required this.textAlign,
+    required this.overflow,
+    required this.maxLines,
   });
+
+  factory AnimatedNumberSwitcher.stringNumber(
+    String number, {
+    TextStyle? style,
+    TextAlign? textAlign,
+    TextOverflow? overflow,
+    int? maxLines,
+  }) {
+    final n = int.tryParse(number);
+    assert(n != null, 'text `number` should be a number');
+
+    return AnimatedNumberSwitcher._(
+      text: number,
+      maxLines: maxLines,
+      overflow: overflow,
+      style: style,
+      textAlign: textAlign,
+    );
+  }
 
   @override
   State<AnimatedNumberSwitcher> createState() => _AnimatedNumberSwitcherState();
@@ -28,8 +57,8 @@ class AnimatedNumberSwitcher extends StatefulWidget {
 class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with TickerProviderStateMixin {
   late final _controllers = <AnimationController>[];
   late int _changedLengh = 0;
-  late List<String> _oldText = _getNumbers(widget.number);
-  late List<String> _newText = _getNumbers(widget.number);
+  late List<String> _oldText = _getNumbers(widget.text);
+  late List<String> _newText = _getNumbers(widget.text);
   var _status = _LengthChangeStatus.none;
   @override
   void initState() {
@@ -40,9 +69,9 @@ class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with Ti
   @override
   void didUpdateWidget(covariant AnimatedNumberSwitcher oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.number == widget.number) return;
-    _oldText = _getNumbers(oldWidget.number);
-    _newText = _getNumbers(widget.number);
+    if (oldWidget.text == widget.text) return;
+    _oldText = _getNumbers(oldWidget.text);
+    _newText = _getNumbers(widget.text);
     if (_oldText.length < _newText.length) {
       _status = _LengthChangeStatus.increase;
       _changedLengh = _newText.length - _oldText.length;
@@ -63,67 +92,18 @@ class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with Ti
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSize(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.ease,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            textDirection: TextDirection.ltr,
-            children: List.generate(
-              _oldText.length,
-              (index) {
-                final controller = _controllers.elementAtOrNull(index);
-                if (controller == null) return const SizedBox();
-                return FadeTransition(
-                  opacity: CurvedAnimation(parent: controller, curve: Curves.easeOut).drive(Tween(begin: 1, end: 0)),
-                  child: Text(
-                    _oldText[index],
-                    style: widget.style,
-                    overflow: widget.overflow,
-                    textAlign: widget.textAlign,
-                    maxLines: widget.maxLines,
-                  ),
-                );
-              },
-            ),
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            textDirection: TextDirection.ltr,
-            children: List.generate(
-              _newText.length,
-              (index) {
-                final controller = _controllers.elementAtOrNull(index);
-                if (controller == null) return const SizedBox();
-                return FadeTransition(
-                  opacity: CurvedAnimation(parent: controller, curve: Curves.ease).drive(Tween(begin: .0, end: 1)),
-                  child: SlideTransition(
-                    position: CurvedAnimation(parent: controller, curve: Curves.ease).drive(
-                      Tween(begin: const Offset(0, -1), end: const Offset(0, 0)),
-                    ),
-                    child: Text(
-                      _newText[index],
-                      style: widget.style,
-                      overflow: widget.overflow,
-                      textAlign: widget.textAlign,
-                      maxLines: widget.maxLines,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+    return SwitcherWidget(
+      controllers: _controllers,
+      newChars: _newText,
+      oldChars: _oldText,
+      style: widget.style,
+      textAlign: widget.textAlign,
+      maxLines: widget.maxLines,
+      overflow: widget.overflow,
     );
   }
 
-  List<String> _getNumbers(int number) => number.toString().split('');
+  List<String> _getNumbers(String number) => number.split('');
 
   void _initControllers() {
     for (int i = 0; i < _newText.length; i++) {
