@@ -1,6 +1,6 @@
 # animated_number_switcher
 
-A Flutter package to animate text change. mostly numbers.
+A Flutter package to animate text change. mostly numbers. it can animate time changes as well using time switcher.
 
 ## Getting started
 
