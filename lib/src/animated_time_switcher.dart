@@ -40,7 +40,7 @@ class AnimatedTimeSwitcher extends StatelessWidget {
           ),
         ),
         itemBuilder: (context, index) => Center(
-          child: AnimatedNumberSwitcher.stringNumber(
+          child: AnimatedNumberSwitcher.number(
             params[index],
             style: style,
             textAlign: textAlign,

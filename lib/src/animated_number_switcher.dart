@@ -31,7 +31,7 @@ class AnimatedNumberSwitcher extends StatefulWidget {
     required this.maxLines,
   });
 
-  factory AnimatedNumberSwitcher.stringNumber(
+  factory AnimatedNumberSwitcher.number(
     String number, {
     TextStyle? style,
     TextAlign? textAlign,
@@ -49,6 +49,21 @@ class AnimatedNumberSwitcher extends StatefulWidget {
       textAlign: textAlign,
     );
   }
+
+  factory AnimatedNumberSwitcher.text(
+    String text, {
+    TextStyle? style,
+    TextAlign? textAlign,
+    TextOverflow? overflow,
+    int? maxLines,
+  }) =>
+      AnimatedNumberSwitcher._(
+        text: text,
+        maxLines: maxLines,
+        overflow: overflow,
+        style: style,
+        textAlign: textAlign,
+      );
 
   @override
   State<AnimatedNumberSwitcher> createState() => _AnimatedNumberSwitcherState();

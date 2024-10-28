@@ -35,7 +35,7 @@ class SwitcherWidget extends StatelessWidget {
                 final controller = controllers.elementAtOrNull(index);
                 if (controller == null) return const SizedBox();
                 return FadeTransition(
-                  opacity: CurvedAnimation(parent: controller, curve: Curves.easeOut).drive(Tween(begin: 1, end: 0)),
+                  opacity: CurvedAnimation(parent: controller, curve: Curves.easeOutQuint).drive(Tween(begin: 1, end: 0)),
                   child: SlideTransition(
                     position: CurvedAnimation(parent: controller, curve: Curves.ease).drive(
                       Tween(begin: const Offset(0, 0), end: const Offset(0, 1)),
