@@ -6,8 +6,13 @@ repository: https://github.com/P-B1101/animated-number-switcher
 
 environment:
   sdk: ^3.5.3
+  flutter: ">=1.17.0"
 
+dependencies:
+  flutter:
+    sdk: flutter
 
 dev_dependencies:
-  test: 
-  lints:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
