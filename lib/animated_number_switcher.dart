@@ -1,5 +1,9 @@
-library animated_number_switcher;
+library;
 
-export 'src/animated_number_switcher.dart';
-export 'src/animated_text_switcher.dart';
-export 'src/animated_time_switcher.dart';
+import 'package:flutter/material.dart';
+
+import 'src/switcher_widget.dart';
+
+part 'src/animated_number_switcher.dart';
+part 'src/animated_text_switcher.dart';
+part 'src/animated_time_switcher.dart';

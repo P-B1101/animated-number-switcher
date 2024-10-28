@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
+part of '../animated_number_switcher.dart';
 
-import 'switcher_widget.dart';
 
 class AnimatedTextSwitcher extends StatefulWidget {
   /// The text to display.

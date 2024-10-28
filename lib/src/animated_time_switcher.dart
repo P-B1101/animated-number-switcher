@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-import 'animated_number_switcher.dart';
+part of '../animated_number_switcher.dart';
 
 class AnimatedTimeSwitcher extends StatelessWidget {
   /// The duration to display in format of dd[splitter]hh[splitter]mm[splitter]ss

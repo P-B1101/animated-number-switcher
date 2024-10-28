@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-import 'switcher_widget.dart';
+part of '../animated_number_switcher.dart';
 
 enum _LengthChangeStatus {
   increase,
