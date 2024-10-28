@@ -13,6 +13,7 @@ class AnimatedNumberSwitcher extends StatefulWidget {
   final TextStyle? style;
   final TextAlign? textAlign;
   final TextOverflow? overflow;
+  final Duration? duration;
   final int? maxLines;
   const AnimatedNumberSwitcher(
     int number, {
@@ -21,6 +22,7 @@ class AnimatedNumberSwitcher extends StatefulWidget {
     this.textAlign,
     this.overflow,
     this.maxLines,
+    this.duration,
   }) : text = '$number';
 
   const AnimatedNumberSwitcher._({
@@ -29,6 +31,7 @@ class AnimatedNumberSwitcher extends StatefulWidget {
     required this.textAlign,
     required this.overflow,
     required this.maxLines,
+    required this.duration,
   });
 
   factory AnimatedNumberSwitcher.number(
@@ -37,6 +40,7 @@ class AnimatedNumberSwitcher extends StatefulWidget {
     TextAlign? textAlign,
     TextOverflow? overflow,
     int? maxLines,
+    Duration? duration,
   }) {
     final n = int.tryParse(number);
     assert(n != null, 'text `number` should be a number');
@@ -47,6 +51,7 @@ class AnimatedNumberSwitcher extends StatefulWidget {
       overflow: overflow,
       style: style,
       textAlign: textAlign,
+      duration: duration,
     );
   }
 
@@ -56,6 +61,7 @@ class AnimatedNumberSwitcher extends StatefulWidget {
     TextAlign? textAlign,
     TextOverflow? overflow,
     int? maxLines,
+    Duration? duration,
   }) =>
       AnimatedNumberSwitcher._(
         text: text,
@@ -63,6 +69,7 @@ class AnimatedNumberSwitcher extends StatefulWidget {
         overflow: overflow,
         style: style,
         textAlign: textAlign,
+        duration: duration,
       );
 
   @override
@@ -122,7 +129,7 @@ class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with Ti
 
   void _initControllers() {
     for (int i = 0; i < _newText.length; i++) {
-      _controllers.add(AnimationController(vsync: this, duration: const Duration(milliseconds: 300)));
+      _controllers.add(AnimationController(vsync: this, duration: widget.duration ?? _duration));
     }
   }
 
@@ -137,7 +144,7 @@ class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with Ti
     switch (_status) {
       case _LengthChangeStatus.increase:
         for (int i = 0; i < _changedLengh; i++) {
-          _controllers.add(AnimationController(vsync: this, duration: const Duration(milliseconds: 300)));
+          _controllers.add(AnimationController(vsync: this, duration: widget.duration ?? _duration));
         }
         break;
       case _LengthChangeStatus.decrease:
@@ -153,4 +160,6 @@ class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with Ti
       if (_oldText.elementAtOrNull(i) != _newText.elementAtOrNull(i)) _controllers.elementAtOrNull(i)?.forward(from: 0);
     }
   }
+
+  static const _duration = Duration(milliseconds: 300);
 }

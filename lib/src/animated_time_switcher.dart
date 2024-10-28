@@ -9,6 +9,7 @@ class AnimatedTimeSwitcher extends StatelessWidget {
   final TextAlign? textAlign;
   final TextOverflow? overflow;
   final int? maxLines;
+  final Duration? duration;
   const AnimatedTimeSwitcher(
     this.time, {
     super.key,
@@ -17,6 +18,7 @@ class AnimatedTimeSwitcher extends StatelessWidget {
     this.overflow,
     this.maxLines,
     this.splitter = ':',
+    this.duration,
   });
 
   @override
@@ -46,6 +48,7 @@ class AnimatedTimeSwitcher extends StatelessWidget {
             textAlign: textAlign,
             overflow: overflow,
             maxLines: maxLines,
+            duration: duration,
           ),
         ),
       ),

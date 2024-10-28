@@ -61,16 +61,19 @@ class SwitcherWidget extends StatelessWidget {
               (index) {
                 final controller = controllers.elementAtOrNull(index);
                 if (controller == null) return const SizedBox();
-                return SlideTransition(
-                  position: CurvedAnimation(parent: controller, curve: Curves.ease).drive(
-                    Tween(begin: const Offset(0, -1), end: const Offset(0, 0)),
-                  ),
-                  child: Text(
-                    newChars[index],
-                    style: style,
-                    overflow: overflow,
-                    textAlign: textAlign,
-                    maxLines: maxLines,
+                return FadeTransition(
+                  opacity: CurvedAnimation(parent: controller, curve: Curves.ease).drive(Tween(begin: 0, end: 1)),
+                  child: SlideTransition(
+                    position: CurvedAnimation(parent: controller, curve: Curves.ease).drive(
+                      Tween(begin: const Offset(0, -1), end: const Offset(0, 0)),
+                    ),
+                    child: Text(
+                      newChars[index],
+                      style: style,
+                      overflow: overflow,
+                      textAlign: textAlign,
+                      maxLines: maxLines,
+                    ),
                   ),
                 );
               },

@@ -8,6 +8,7 @@ class AnimatedTextSwitcher extends StatefulWidget {
   final TextAlign? textAlign;
   final TextOverflow? overflow;
   final int? maxLines;
+  final Duration? duration;
   const AnimatedTextSwitcher(
     this.text, {
     super.key,
@@ -15,6 +16,7 @@ class AnimatedTextSwitcher extends StatefulWidget {
     this.textAlign,
     this.overflow,
     this.maxLines,
+    this.duration,
   });
 
   @override
@@ -22,7 +24,8 @@ class AnimatedTextSwitcher extends StatefulWidget {
 }
 
 class _AnimatedTextSwitcherState extends State<AnimatedTextSwitcher> with SingleTickerProviderStateMixin {
-  late final _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
+  static const _duration = Duration(milliseconds: 300);
+  late final _controller = AnimationController(vsync: this, duration: widget.duration ?? _duration);
   late String _oldText = widget.text;
   late String _newText = widget.text;
 
