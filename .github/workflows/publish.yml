@@ -8,16 +8,16 @@ on:
 
 jobs:
   publish:
+    environment: 'pub.dev'
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
     steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-      - run: flutter --version
-      - name: Publish
-        run: dart pub publish --force
+    - name: 📚 Git Checkout
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    - uses: ./.github/actions/publish_flutter_package
+      with:
+       # Specify the github actions deployment environment
+       working-directory: shorebird_code_push
