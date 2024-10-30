@@ -1,3 +1,7 @@
+## 0.0.4
+
+* Fix format issue
+
 ## 0.0.3
 
 * Update preview gif address

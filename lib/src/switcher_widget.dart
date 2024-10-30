@@ -35,9 +35,13 @@ class SwitcherWidget extends StatelessWidget {
                 final controller = controllers.elementAtOrNull(index);
                 if (controller == null) return const SizedBox();
                 return FadeTransition(
-                  opacity: CurvedAnimation(parent: controller, curve: Curves.easeOutQuint).drive(Tween(begin: 1, end: 0)),
+                  opacity: CurvedAnimation(
+                          parent: controller, curve: Curves.easeOutQuint)
+                      .drive(Tween(begin: 1, end: 0)),
                   child: SlideTransition(
-                    position: CurvedAnimation(parent: controller, curve: Curves.ease).drive(
+                    position:
+                        CurvedAnimation(parent: controller, curve: Curves.ease)
+                            .drive(
                       Tween(begin: const Offset(0, 0), end: const Offset(0, 1)),
                     ),
                     child: Text(
@@ -62,10 +66,15 @@ class SwitcherWidget extends StatelessWidget {
                 final controller = controllers.elementAtOrNull(index);
                 if (controller == null) return const SizedBox();
                 return FadeTransition(
-                  opacity: CurvedAnimation(parent: controller, curve: Curves.ease).drive(Tween(begin: 0, end: 1)),
+                  opacity:
+                      CurvedAnimation(parent: controller, curve: Curves.ease)
+                          .drive(Tween(begin: 0, end: 1)),
                   child: SlideTransition(
-                    position: CurvedAnimation(parent: controller, curve: Curves.ease).drive(
-                      Tween(begin: const Offset(0, -1), end: const Offset(0, 0)),
+                    position:
+                        CurvedAnimation(parent: controller, curve: Curves.ease)
+                            .drive(
+                      Tween(
+                          begin: const Offset(0, -1), end: const Offset(0, 0)),
                     ),
                     child: Text(
                       newChars[index],

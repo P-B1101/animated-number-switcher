@@ -1,6 +1,5 @@
 part of '../animated_number_switcher.dart';
 
-
 class AnimatedTextSwitcher extends StatefulWidget {
   /// The text to display.
   final String text;
@@ -50,9 +49,11 @@ class AnimatedTextSwitcher extends StatefulWidget {
   State<AnimatedTextSwitcher> createState() => _AnimatedTextSwitcherState();
 }
 
-class _AnimatedTextSwitcherState extends State<AnimatedTextSwitcher> with SingleTickerProviderStateMixin {
+class _AnimatedTextSwitcherState extends State<AnimatedTextSwitcher>
+    with SingleTickerProviderStateMixin {
   static const _duration = Duration(milliseconds: 300);
-  late final _controller = AnimationController(vsync: this, duration: widget.duration ?? _duration);
+  late final _controller =
+      AnimationController(vsync: this, duration: widget.duration ?? _duration);
   late String _oldText = widget.text;
   late String _newText = widget.text;
 

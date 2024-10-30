@@ -102,7 +102,8 @@ class AnimatedNumberSwitcher extends StatefulWidget {
   State<AnimatedNumberSwitcher> createState() => _AnimatedNumberSwitcherState();
 }
 
-class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with TickerProviderStateMixin {
+class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher>
+    with TickerProviderStateMixin {
   late final _controllers = <AnimationController>[];
   late int _changedLengh = 0;
   late List<String> _oldText = _getNumbers(widget.text);
@@ -155,7 +156,8 @@ class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with Ti
 
   void _initControllers() {
     for (int i = 0; i < _newText.length; i++) {
-      _controllers.add(AnimationController(vsync: this, duration: widget.duration ?? _duration));
+      _controllers.add(AnimationController(
+          vsync: this, duration: widget.duration ?? _duration));
     }
   }
 
@@ -170,7 +172,8 @@ class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with Ti
     switch (_status) {
       case _LengthChangeStatus.increase:
         for (int i = 0; i < _changedLengh; i++) {
-          _controllers.add(AnimationController(vsync: this, duration: widget.duration ?? _duration));
+          _controllers.add(AnimationController(
+              vsync: this, duration: widget.duration ?? _duration));
         }
         break;
       case _LengthChangeStatus.decrease:
@@ -183,7 +186,9 @@ class _AnimatedNumberSwitcherState extends State<AnimatedNumberSwitcher> with Ti
         break;
     }
     for (int i = 0; i < _controllers.length; i++) {
-      if (_oldText.elementAtOrNull(i) != _newText.elementAtOrNull(i)) _controllers.elementAtOrNull(i)?.forward(from: 0);
+      if (_oldText.elementAtOrNull(i) != _newText.elementAtOrNull(i)) {
+        _controllers.elementAtOrNull(i)?.forward(from: 0);
+      }
     }
   }
 
