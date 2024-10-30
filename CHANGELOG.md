@@ -1,3 +1,7 @@
+## 0.0.3
+
+* Update preview gif address
+
 ## 0.0.2
 
 * Add preview gif
