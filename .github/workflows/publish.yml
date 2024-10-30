@@ -20,4 +20,4 @@ jobs:
     - uses: ./.github/actions/publish_flutter_package
       with:
        # Specify the github actions deployment environment
-       working-directory: shorebird_code_push
+       working-directory: ./
