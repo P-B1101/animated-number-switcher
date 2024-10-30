@@ -10,6 +10,9 @@ To use this package, add `animated_number_switcher` as a [dependency in your pub
 
 #### Example 
 
+
+![Demo](screenshots/demo.gif)
+
 ```dart
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
