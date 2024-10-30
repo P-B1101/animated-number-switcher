@@ -11,7 +11,7 @@ To use this package, add `animated_number_switcher` as a [dependency in your pub
 #### Example 
 
 
-![Demo](screenshots/demo.gif)
+![Demo]( https://raw.githubusercontent.com/P-B1101/animated-number-switcher/main/screenshots/demo.gif)
 
 ```dart
 class MyHomePage extends StatefulWidget {
