@@ -49,11 +49,9 @@ class AnimatedTextSwitcher extends StatefulWidget {
   State<AnimatedTextSwitcher> createState() => _AnimatedTextSwitcherState();
 }
 
-class _AnimatedTextSwitcherState extends State<AnimatedTextSwitcher>
-    with SingleTickerProviderStateMixin {
+class _AnimatedTextSwitcherState extends State<AnimatedTextSwitcher> with SingleTickerProviderStateMixin {
   static const _duration = Duration(milliseconds: 300);
-  late final _controller =
-      AnimationController(vsync: this, duration: widget.duration ?? _duration);
+  late final _controller = AnimationController(vsync: this, duration: widget.duration ?? _duration);
   late String _oldText = widget.text;
   late String _newText = widget.text;
 
@@ -62,6 +60,7 @@ class _AnimatedTextSwitcherState extends State<AnimatedTextSwitcher>
     super.didUpdateWidget(oldWidget);
     _oldText = oldWidget.text;
     _newText = widget.text;
+    if (_oldText == _newText) return;
     _controller.forward(from: 0);
   }
 
